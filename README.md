@@ -142,7 +142,7 @@ SQL Server Database
 
 ---
 
-## 🛠️ Hướng Dẫn Chuyển Đổi Giữa LINQ và Stored Procedures
+## Chuyển Đổi Giữa LINQ và Stored Procedures
 
 ### **Bước 1: Chọn Repository Nào Dùng**
 
@@ -276,23 +276,6 @@ public async Task<IEnumerable<User>> SearchByEmailAsync(string email)
 
 ---
 
-## 💡 Best Practices
 
- **LINQ khi**:
-- Truy vấn đơn giản đến trung bình
-- Cần type-safety
-- Dễ test và maintain
-
- **Stored Procedures khi**:
-- Truy vấn phức tạp với nhiều joins
-- Cần tối ưu hiệu năng cao
-- Xử lý logic phức tạp tại DB
-- Báo cáo/Analytics queries
-
- **Chung cho cả hai**:
-- Luôn dùng parameterized queries (tránh SQL Injection)
-- Viết unit tests
-- Ghi chú code rõ ràng
-- Version control cho migrations
 
 
