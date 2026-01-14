@@ -1,0 +1,11 @@
+D:\TestLapTrinh\SharedLib\bin\Debug\net10.0\SharedLib.deps.json
+D:\TestLapTrinh\SharedLib\bin\Debug\net10.0\SharedLib.dll
+D:\TestLapTrinh\SharedLib\bin\Debug\net10.0\SharedLib.pdb
+D:\TestLapTrinh\SharedLib\obj\Debug\net10.0\SharedLib.GeneratedMSBuildEditorConfig.editorconfig
+D:\TestLapTrinh\SharedLib\obj\Debug\net10.0\SharedLib.AssemblyInfoInputs.cache
+D:\TestLapTrinh\SharedLib\obj\Debug\net10.0\SharedLib.AssemblyInfo.cs
+D:\TestLapTrinh\SharedLib\obj\Debug\net10.0\SharedLib.csproj.CoreCompileInputs.cache
+D:\TestLapTrinh\SharedLib\obj\Debug\net10.0\SharedLib.dll
+D:\TestLapTrinh\SharedLib\obj\Debug\net10.0\refint\SharedLib.dll
+D:\TestLapTrinh\SharedLib\obj\Debug\net10.0\SharedLib.pdb
+D:\TestLapTrinh\SharedLib\obj\Debug\net10.0\ref\SharedLib.dll

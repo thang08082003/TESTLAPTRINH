@@ -1,0 +1,155 @@
+﻿@page "/users/create"
+@page "/users/edit/{Id:int}"
+@using SharedLib.Models
+@using BlazorApp.Services
+@inject IUserService UserService
+@inject NavigationManager Navigation
+
+<PageTitle>@(Id == 0 ? "Thêm người dùng" : "Sửa người dùng")</PageTitle>
+
+<h3>@(Id == 0 ? "Thêm người dùng mới" : "Chỉnh sửa người dùng")</h3>
+
+@if (loading)
+{
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Đang tải...</span>
+    </div>
+}
+else
+{
+    <EditForm Model="@user" OnValidSubmit="HandleSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary class="alert alert-danger" />
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label">Mã <span class="text-danger">*</span></label>
+                <InputText class="form-control" @bind-Value="user.Code" placeholder="VD: NV001" />
+                <ValidationMessage For="@(() => user.Code)" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Họ tên <span class="text-danger">*</span></label>
+                <InputText class="form-control" @bind-Value="user.FullName" placeholder="VD: Nguyễn Văn A" />
+                <ValidationMessage For="@(() => user.FullName)" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label">Ngày sinh <span class="text-danger">*</span></label>
+                <InputDate class="form-control" @bind-Value="user.DateOfBirth" />
+                <ValidationMessage For="@(() => user.DateOfBirth)" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Email <span class="text-danger">*</span></label>
+                <InputText type="email" class="form-control" @bind-Value="user.Email" placeholder="example@email.com" />
+                <ValidationMessage For="@(() => user.Email)" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label class="form-label">Điện thoại <span class="text-danger">*</span></label>
+                <InputText class="form-control" @bind-Value="user.Phone" placeholder="0912345678" />
+                <ValidationMessage For="@(() => user.Phone)" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Địa chỉ <span class="text-danger">*</span></label>
+                <InputText class="form-control" @bind-Value="user.Address" placeholder="123 Đường ABC, Quận 1" />
+                <ValidationMessage For="@(() => user.Address)" />
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger">@errorMessage</div>
+        }
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary me-2" disabled="@saving">
+                @if (saving)
+                {
+                    <span class="spinner-border spinner-border-sm me-1"></span>
+                }
+                <i class="bi bi-save"></i> Lưu
+            </button>
+            <button type="button" class="btn btn-secondary" @onclick="Cancel">
+                <i class="bi bi-x-circle"></i> Hủy
+            </button>
+        </div>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private SharedLib.Models.User user = new SharedLib.Models.User
+    {
+        DateOfBirth = DateTime.Today.AddYears(-20)
+    };
+
+    private bool loading = false;
+    private bool saving = false;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id > 0)
+        {
+            loading = true;
+            var existingUser = await UserService.GetUserByIdAsync(Id);
+            if (existingUser != null)
+            {
+                user = existingUser;
+            }
+            else
+            {
+                errorMessage = "Không tìm thấy người dùng!";
+            }
+            loading = false;
+        }
+    }
+
+    private async Task HandleSubmit()
+    {
+        saving = true;
+        errorMessage = null;
+
+        try
+        {
+            bool success;
+            if (Id == 0)
+            {
+                var result = await UserService.CreateUserAsync(user);
+                success = result != null;
+            }
+            else
+            {
+                success = await UserService.UpdateUserAsync(Id, user);
+            }
+
+            if (success)
+            {
+                Navigation.NavigateTo("/users");
+            }
+            else
+            {
+                errorMessage = "Lưu thất bại! Mã hoặc Email có thể đã tồn tại.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Lỗi: {ex.Message}";
+        }
+        finally
+        {
+            saving = false;
+        }       
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/users");
+    }
+}
