@@ -1,9 +1,3 @@
-# Dự Án Quản Lý Người Dùng (User Management System)
-
-##  Giới Thiệu
-Đây là một ứng dụng full-stack sử dụng **Blazor WebAssembly** cho frontend, **ASP.NET Core Web API** cho backend, và **SQL Server** cho cơ sở dữ liệu. Dự án minh họa cách sử dụng cả **LINQ** và **Stored Procedures** để truy cập dữ liệu.
-
----
 
 ##  Cấu Trúc Dự Án
 
